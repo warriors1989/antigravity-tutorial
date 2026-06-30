@@ -2,7 +2,7 @@
 
  Antigravity CLI 的 Statusline（底部状态栏）和 Title（窗口标题栏）虽然渲染位置不同，但底层机制完全相同——CLI 将会话状态以 JSON 格式传给自定义脚本，脚本从中提取字段并格式化输出，CLI 再将输出渲染到对应的 UI 位置。
  
- 因此本目录将二者的自定义脚本放在一起，方便统一管理和参考。
+ 因此本文档将二者的自定义脚本放在一起进行说明。
  
  ---
  
@@ -12,13 +12,13 @@
 
 > Toggle standard status line components, define custom scripting configurations, and format dynamic JSON state payloads.
 
-用大白话说，statusline 就是 Antigravity CLI 底部那一条“实时仪表盘”。它不负责对话内容本身，而是告诉你 CLI 当前处在什么状态：模型是不是正在思考、上下文用了多少、当前在哪个 Git 分支、沙盒是否开启、后台有没有任务、quota 还剩多少。
+statusline 就是 Antigravity CLI 底部那一条“实时仪表盘”。它不负责对话内容本身，而是告诉你 CLI 当前处在什么状态：模型是不是正在思考、上下文用了多少、当前在哪个 Git 分支、沙盒是否开启、后台有没有任务、quota 还剩多少。
 
 Antigravity CLI 支持通过自定义脚本渲染 statusline。CLI 会把当前会话状态、模型、上下文窗口、版本控制、任务数量、quota 等信息以 JSON 形式传给脚本，脚本再把这些字段格式化成终端里显示的状态栏。
 
 本目录提供两个脚本：
 
-### 官方版本：[statusline.sh](https://github.com/warriors1989/antigravity-tutorial/blob/master/antigrivity-cli/Customizations/statusline-title/statusline.sh)
+### 官方版本：[statusline.sh](https://github.com/google-antigravity/antigravity-cli/blob/main/examples/statusline/statusline.sh)
 
 `statusline.sh` 是官方提供的示例脚本，它会显示 agent 状态、模型、Git 分支、上下文使用率、artifacts、subagents、tasks 和 sandbox 状态。下图为运行效果：
 
@@ -46,12 +46,12 @@ curl -L https://raw.githubusercontent.com/warriors1989/antigravity-tutorial/refs
  
  > Configure dynamic window titles, map custom scripting configurations, and format JSON state outputs to customize terminal headers.
  
-用大白话说 title 就是Antigravity CLI 窗口**顶部的标题栏**。与 statusline 类似，CLI 同样支持通过自定义脚本来渲染标题栏内容，适用于需要时刻关注某些会话状态信息的场景——尤其是在终端标签页或窗口标题栏中快速识别当前会话。
+title 就是Antigravity CLI 窗口**顶部的标题栏**。与 statusline 类似，CLI 同样支持通过自定义脚本来渲染标题栏内容，适用于需要时刻关注某些会话状态信息的场景——尤其是在终端标签页或窗口标题栏中快速识别当前会话。
 
-### 官方版本：[title.sh](https://github.com/warriors1989/antigravity-tutorial/blob/master/antigrivity-cli/Customizations/statusline-title/title.sh)
+### 官方版本：[title.sh](https://github.com/google-antigravity/antigravity-cli/blob/main/examples/title/title.sh)
 
 ```bash
-curl -L https://raw.githubusercontent.com/warriors1989/antigravity-tutorial/refs/heads/master/antigrivity-cli/Customizations/statusline-title/title.sh -o ~/.gemini/antigravity-cli/title.sh
+curl -L https://raw.githubusercontent.com/google-antigravity/antigravity-cli/refs/heads/main/examples/title/title.sh -o ~/.gemini/antigravity-cli/title.sh
 ```
 
 ![官方示例 statusline 效果](images/title.example.png)
@@ -111,12 +111,18 @@ CLI 传进来的 JSON 长这样：
  ### 安装步骤
 ### 第一步：下载官方示例脚本
 
-首先下载官方提供的 [`statusline.sh`](https://github.com/google-antigravity/antigravity-cli/blob/main/examples/statusline/statusline.sh) 脚本，放到~/.gemini/antigravity-cli目录下
+首先下载官方提供的 [`statusline.sh`] / [`title.sh`]  脚本，放到~/.gemini/antigravity-cli目录下
 
-可以直接运行下面的命令下载脚本：
+下载 statusline 脚本
 
 ```bash
 curl -L https://raw.githubusercontent.com/google-antigravity/antigravity-cli/refs/heads/main/examples/statusline/statusline.sh -o ~/.gemini/antigravity-cli/statusline.sh
+```
+
+下载 title 脚本
+
+```bash
+curl -L https://raw.githubusercontent.com/google-antigravity/antigravity-cli/refs/heads/main/examples/title/title.sh -o ~/.gemini/antigravity-cli/title.sh
 ```
 
 ### 第二步：给脚本添加执行权限
@@ -127,7 +133,11 @@ curl -L https://raw.githubusercontent.com/google-antigravity/antigravity-cli/ref
 chmod +x ~/.gemini/antigravity-cli/statusline.sh
 ```
 
-### 第三步：配置 statusline / title 参数
+```bash
+chmod +x ~/.gemini/antigravity-cli/title.sh
+```
+
+### 第三步：statusline & title 运行配置
 
 打开 Antigravity CLI 的全局配置文件：
 
@@ -159,7 +169,7 @@ vim ~/.gemini/antigravity-cli/settings.json
 }
 ```
 
-这里的 `"enabled": true` 表示默认开启 statusline/title。如果你暂时不想显示，可以把它改成 `false`。
+这里的 `"enabled": true` 表示默认开启 statusline / title。如果你暂时不想显示，可以把它改成 `false`。
 
 也可以不用反复改配置文件，直接在 Antigravity CLI 里运行：
 
@@ -173,13 +183,13 @@ vim ~/.gemini/antigravity-cli/settings.json
 /title
 ```
 
-这个命令会在 `on` 和 `off` 之间切换 statusline/title。
+这个命令会在 `on` 和 `off` 之间切换 statusline / title的是否开启状态。
 
 ![使用 /statusline 切换开关](images/statusline-toggle.png)
 
 ---
 
-## ⚠️ 第四步（必读）：状态栏显示默认值，不是真实值？
+## ⚠️ 第四步（踩坑必读）：状态栏显示默认值，不是真实值？
 
 配置完成后，如果状态栏一直显示固定的默认值（比如 agent 状态始终是 `idle`、上下文始终是 `0%`、模型名称为空等），**而不是跟随实际运行状态变化**，那 100% 的原因是系统没有安装 `jq` 命令。
 
@@ -221,7 +231,7 @@ sudo apt install jq
 sudo yum install jq
 
 # Windows（使用 winget 或 Chocolatey）
-winget install jq
+ winget install jqlang.jq
 choco install jq
 ```
 
