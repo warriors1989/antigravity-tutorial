@@ -231,7 +231,7 @@ sudo apt install jq
 sudo yum install jq
 
 # Windows（使用 winget 或 Chocolatey）
- winget install jqlang.jq
+winget install jqlang.jq
 choco install jq
 ```
 
@@ -242,4 +242,4 @@ which jq      # 应该输出路径，如 /usr/local/bin/jq
 jq --version  # 应该输出版本号，如 jq-1.7.1
 ```
 
-> 💡 补充说明：示例脚本的 `2>/dev/null` 把 `jq` 的错误信息吞掉了，所以没有 jq 时不会有任何报错提示，只会静默显示默认值——这也是这个 bug 容易被忽略的原因。
+> 💡 补充说明：示例脚本的 `2>/dev/null` 把 `jq` 的错误信息吞掉了，所以没有 jq 时不会有任何报错提示，只会静默显示默认值。
