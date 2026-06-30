@@ -48,7 +48,7 @@ curl -L https://raw.githubusercontent.com/warriors1989/antigravity-tutorial/refs
  
 用大白话说 title 就是Antigravity CLI 窗口**顶部的标题栏**。与 statusline 类似，CLI 同样支持通过自定义脚本来渲染标题栏内容，适用于需要时刻关注某些会话状态信息的场景——尤其是在终端标签页或窗口标题栏中快速识别当前会话。
 
-### 官方版本：[title.sh](https://github.com/warriors1989/antigravity-tutorial/blob/master/antigrivity-cli/Customizations/statusline-title/statusline.sh)
+### 官方版本：[title.sh](https://github.com/warriors1989/antigravity-tutorial/blob/master/antigrivity-cli/Customizations/statusline-title/title.sh)
 
 ```bash
 curl -L https://raw.githubusercontent.com/warriors1989/antigravity-tutorial/refs/heads/master/antigrivity-cli/Customizations/statusline-title/title.sh -o ~/.gemini/antigravity-cli/title.sh
@@ -57,8 +57,6 @@ curl -L https://raw.githubusercontent.com/warriors1989/antigravity-tutorial/refs
 ![官方示例 statusline 效果](images/title.example.png)
 
 ### 运行原理（Statusline 与 Title 通用）
-
-官方对自定义 statusline 的工作机制解释如下：
 
 用大白话说就是：**CLI 把当前运行状态打包成一份 JSON，通过标准输入（stdin）塞给你的脚本；你的脚本想怎么排版就怎么排版，往标准输出（stdout）打印一行字符串；CLI 拿到这行字符串，直接渲染到提示面板底部或顶部的状态栏里。支持 ANSI 颜色代码，所以你可以给不同字段上色。你也可以根据自己需要进行自定义显示输出。**
 
@@ -129,7 +127,7 @@ curl -L https://raw.githubusercontent.com/google-antigravity/antigravity-cli/ref
 chmod +x ~/.gemini/antigravity-cli/statusline.sh
 ```
 
-### 第三步：配置 statusline 命令
+### 第三步：配置 statusline / title 参数
 
 打开 Antigravity CLI 的全局配置文件：
 
